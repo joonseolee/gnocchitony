@@ -3,10 +3,10 @@ DROP TABLE IF EXISTS payment;
 DROP TABLE IF EXISTS card;
 DROP TABLE IF EXISTS reciept;
 DROP TABLE IF EXISTS onlineuser;
-DROP TABLE IF EXISTS comitee;
+DROP TABLE IF EXISTS committee;
 
 
-CREATE TABLE comitee (
+CREATE TABLE committee (
         id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
         name VARCHAR(55) NOT NULL
 
@@ -54,7 +54,7 @@ CREATE TABLE card (
 
 );
 
-ALTER TABLE reciept ADD CONSTRAINT reciept_fk0 FOREIGN KEY (comitee_id) REFERENCES comitee(id);
+ALTER TABLE reciept ADD CONSTRAINT reciept_fk0 FOREIGN KEY (comitee_id) REFERENCES committee(id);
 
 ALTER TABLE reciept ADD CONSTRAINT reciept_fk1 FOREIGN KEY (onlineuser_id) REFERENCES onlineuser(id);
 
