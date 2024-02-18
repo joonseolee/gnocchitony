@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 @Service
-class CommitteeService(private val db: JdbcTemplate, private val repository: ) {
+class CommitteeService(private val db: JdbcTemplate) {
     fun findCommittees(): List<Comitee> = db.query("select * from comitee") { response, _ ->
             Comitee(response.getInt("id"), response.getString("name"))
     }
