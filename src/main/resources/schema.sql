@@ -54,6 +54,21 @@ CREATE TABLE card (
 
 );
 
+CREATE TABLE economicrequest (
+    id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    subject VARCHAR(200),
+    purpose VARCHAR(500),
+    date DATETIME,
+    duration VARCHAR(200),
+    description VARCHAR(1000),
+    amount DECIMAL(10,2) NOT NULL,
+    personcount INT,
+    names VARCHAR(500),
+    paymentdescription VARCHAR(500),
+    otherinformation VARCHAR(1000),
+    onlineuser_id INT NOT NULL,
+)
+
 ALTER TABLE reciept ADD CONSTRAINT reciept_fk0 FOREIGN KEY (comitee_id) REFERENCES committee(id);
 
 ALTER TABLE reciept ADD CONSTRAINT reciept_fk1 FOREIGN KEY (onlineuser_id) REFERENCES onlineuser(id);
@@ -63,3 +78,5 @@ ALTER TABLE attachment ADD CONSTRAINT attachment_fk0 FOREIGN KEY (reciept_id) RE
 ALTER TABLE payment ADD CONSTRAINT payment_fk0 FOREIGN KEY (reciept_id) REFERENCES reciept(id);
 
 ALTER TABLE card ADD CONSTRAINT card_fk0 FOREIGN KEY (reciept_id) REFERENCES reciept(id);
+
+ALTER TABLE economicrequest ADD CONSTRAINT economicrequest_fk0 FOREIGN KEY (onlineuser_id) REFERENCES onlineuser(id);
