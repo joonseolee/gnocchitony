@@ -1,9 +1,6 @@
 package com.example.autobank.data
 
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.Id
-import jakarta.persistence.Table
+import jakarta.persistence.*
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
@@ -11,8 +8,9 @@ import java.time.LocalDateTime
 @Table(name = "economicrequest")
 class Economicrequest (
         @Id
-        @Column(name = "id")
-        open val id: Int,
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Column(name = "id", nullable = false)
+        val id: Int,
         @Column(name = "subject")
         open val subject: String,
         @Column(name = "purpose")
@@ -43,13 +41,6 @@ class Economicrequest (
 
         @Column(name = "onlineuser_id")
         val onlineUserId: Int?,
-
-        @Column(name = "status", nullable = false)
-        val status: String,
-
-        @Column(name = "processedByUserId")
-        val processedByUserId: Int?
-
 
 )
 

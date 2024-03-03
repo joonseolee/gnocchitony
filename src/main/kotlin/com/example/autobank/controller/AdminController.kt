@@ -6,10 +6,7 @@ import com.example.autobank.service.AdminService
 import com.example.autobank.service.EconomicrequestService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/admin")
@@ -26,7 +23,7 @@ class AdminController(@Autowired val adminService: AdminService, @Autowired val 
     }
 
     @PostMapping("/request")
-    fun checkData(request: Economicrequest) {
+    fun checkData(@RequestBody request: Economicrequest) {
         return economicrequest.createEconomicrequest(request)
     }
 
