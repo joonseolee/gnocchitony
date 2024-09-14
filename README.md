@@ -3,7 +3,7 @@
 
 All endpoints require are protected. Require valid access token (recieved after auth0 login) in the Authorization header. Use /api/auth/check to check if user exists (or create user from token).
 
-### application properties
+### application.properties values
 - spring.datasource.url
 - spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.SQLServerDialect
 - spring.jpa.hibernate.naming.implicit-strategy=org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
