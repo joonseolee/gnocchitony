@@ -14,6 +14,11 @@ class OnlineUserService(val repository: OnlineUserRepository, @Autowired val onl
     @Autowired
     lateinit var authenticationService: AuthenticationService
 
+    fun getOnlineUser(): OnlineUser? {
+        val sub: String = authenticationService.getUserSub()
+        return onlineUserRepository.findByOnlineId(sub)
+    }
+
     fun checkStoredUserBySub(sub: String): AuthenticatedUserResponse {
         if (sub.isEmpty()) {
             return AuthenticatedUserResponse(success = false, false)
@@ -30,7 +35,7 @@ class OnlineUserService(val repository: OnlineUserRepository, @Autowired val onl
         try {
             val userinfo: Auth0User = authenticationService.getUserDetails()
             val onlineUser = OnlineUser(
-                id = "",
+                id = 0,
                 onlineId = userinfo.sub,
                 email = userinfo.email,
                 fullname = userinfo.name,

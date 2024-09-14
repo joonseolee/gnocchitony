@@ -8,6 +8,8 @@ import jakarta.persistence.Table
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import jakarta.persistence.GenerationType
+import org.hibernate.annotations.CreationTimestamp
+import org.jetbrains.annotations.NotNull
 
 
 @Entity
@@ -16,19 +18,20 @@ class Economicrequest (
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "id")
+        @NotNull
         val id: Int,
         @Column(name = "subject")
         val subject: String,
         @Column(name = "purpose")
         val purpose: String,
         @Column(name = "date")
-        val date: LocalDateTime?,
+        val date: LocalDateTime,
 
         @Column(name = "duration")
         val duration: String?,
 
         @Column(name = "description")
-        val description: String?,
+        val description: String,
 
         @Column(name = "amount", nullable = false)
         val amount: BigDecimal,
@@ -37,16 +40,20 @@ class Economicrequest (
         val personCount: Int?,
 
         @Column(name = "names")
-        val names: String?,
+        val names: String,
 
         @Column(name = "paymentdescription")
-        val paymentDescription: String?,
+        val paymentDescription: String,
 
         @Column(name = "otherinformation")
         val otherInformation: String?,
 
+        @CreationTimestamp
+        @Column(name = "createdat")
+        val createdat: LocalDateTime?,
+
         @Column(name = "onlineuser_id")
-        val onlineUserId: Int?,
+        var onlineUserId: Int?,
 
 
 
