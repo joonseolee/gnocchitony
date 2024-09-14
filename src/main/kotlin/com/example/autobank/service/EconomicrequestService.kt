@@ -1,9 +1,11 @@
 package com.example.autobank.service
 
 import com.example.autobank.data.Economicrequest
+import com.example.autobank.data.user.OnlineUser
 import com.example.autobank.repository.EconomicrequestRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+
 
 @Service
 class EconomicrequestService {
@@ -11,8 +13,13 @@ class EconomicrequestService {
     @Autowired
     lateinit var economicrequestRepository: EconomicrequestRepository
 
+    @Autowired
+    lateinit var onlineUserService: OnlineUserService
+
     fun createEconomicrequest(economicrequest: Economicrequest): Economicrequest {
-        return economicrequestRepository.save(economicrequest)
+        val user = onlineUserService.getOnlineUser() ?: throw Exception("User not found")
+        economicrequest.onlineUserId = user.id;
+        return economicrequestRepository.save(economicrequest);
     }
 
     fun deleteEconomicrequest(id: Int) {

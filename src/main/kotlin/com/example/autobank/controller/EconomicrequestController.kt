@@ -18,18 +18,16 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/economicrequest")
 class EconomicrequestController() {
-
     @Autowired
     lateinit var economicrequestService: EconomicrequestService;
-
     @Autowired
     lateinit var authenticationService: AuthenticationService;
 
     @PostMapping("/create")
     fun createEconomicrequest(@RequestBody economicrequest: Economicrequest): ResponseEntity<Economicrequest> {
-        println(authenticationService.getUserSub())
         return try {
             val created: Economicrequest = economicrequestService.createEconomicrequest(economicrequest);
+            created.onlineUserId = null;
             ResponseEntity.ok(created);
         } catch (e: Exception) {
             ResponseEntity.badRequest().build();

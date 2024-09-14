@@ -8,7 +8,7 @@ open class OnlineUser(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    open val id: String,
+    open val id: Int,
     @Column(name = "email")
     open val email: String,
     @Column(name = "fullname")
