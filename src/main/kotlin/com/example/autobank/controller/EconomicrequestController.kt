@@ -1,6 +1,7 @@
 package com.example.autobank.controller
 
 import com.example.autobank.data.Economicrequest
+import com.example.autobank.service.AuthenticationService
 import com.example.autobank.service.EconomicrequestService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
@@ -21,8 +22,12 @@ class EconomicrequestController() {
     @Autowired
     lateinit var economicrequestService: EconomicrequestService;
 
+    @Autowired
+    lateinit var authenticationService: AuthenticationService;
+
     @PostMapping("/create")
     fun createEconomicrequest(@RequestBody economicrequest: Economicrequest): ResponseEntity<Economicrequest> {
+        println(authenticationService.getUserSub())
         return try {
             val created: Economicrequest = economicrequestService.createEconomicrequest(economicrequest);
             ResponseEntity.ok(created);

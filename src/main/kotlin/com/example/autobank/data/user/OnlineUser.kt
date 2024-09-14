@@ -3,12 +3,17 @@ package com.example.autobank.data.user
 import jakarta.persistence.*
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "onlineuser")
 open class OnlineUser(
     @Id
-    @Column(name = "onlineId")
-    open val onlineId: String,
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    open val id: String,
     @Column(name = "email")
-    open val email: String
+    open val email: String,
+    @Column(name = "fullname")
+    open val fullname: String,
+    @Column(name = "onlineid")
+    open val onlineId: String,
+
 )

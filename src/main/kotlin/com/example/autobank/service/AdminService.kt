@@ -13,6 +13,7 @@ class AdminService(private val repository: AdminRepository) {
     }
 
     fun checkIfAdmin(user: OnlineUser): Boolean {
-        return repository.existsByOnlineId(user.onlineId)
+        return false
+        //return repository.existsByOnlineId(user.onlineId)
     }
 }
