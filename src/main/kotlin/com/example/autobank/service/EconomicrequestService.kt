@@ -11,8 +11,8 @@ class EconomicrequestService {
     @Autowired
     lateinit var economicrequestRepository: EconomicrequestRepository
 
-    fun createEconomicrequest(economicrequest: Economicrequest) {
-        economicrequestRepository.save(economicrequest)
+    fun createEconomicrequest(economicrequest: Economicrequest): Economicrequest {
+        return economicrequestRepository.save(economicrequest)
     }
 
     fun deleteEconomicrequest(id: Int) {

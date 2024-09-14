@@ -23,10 +23,6 @@ class AdminController(@Autowired val adminService: AdminService, @Autowired val 
         return adminService.checkIfAdmin(user)
     }
 
-    @PostMapping("/request")
-    fun saveRequest(@RequestBody request: Economicrequest) {
-        return economicrequest.createEconomicrequest(request)
-    }
 
     data class ApproveEconomicRequestBody(
             val economicrequest: Economicrequest,

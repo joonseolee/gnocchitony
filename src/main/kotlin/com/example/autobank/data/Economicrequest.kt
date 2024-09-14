@@ -2,21 +2,25 @@ package com.example.autobank.data
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
 import jakarta.persistence.Id
 import jakarta.persistence.Table
 import java.math.BigDecimal
 import java.time.LocalDateTime
+import jakarta.persistence.GenerationType
+
 
 @Entity
 @Table(name = "economicrequest")
 class Economicrequest (
         @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "id")
-        open val id: Int,
+        val id: Int,
         @Column(name = "subject")
-        open val subject: String,
+        val subject: String,
         @Column(name = "purpose")
-        open val purpose: String,
+        val purpose: String,
         @Column(name = "date")
         val date: LocalDateTime?,
 
