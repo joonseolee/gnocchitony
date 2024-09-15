@@ -8,6 +8,4 @@ import org.springframework.stereotype.Repository
 interface EconomicrequestRepository : JpaRepository<Economicrequest, Int> {
 
 
-
-
 }

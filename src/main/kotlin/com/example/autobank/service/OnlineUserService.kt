@@ -4,12 +4,15 @@ import com.example.autobank.data.authentication.Auth0User
 import com.example.autobank.data.authentication.AuthenticatedUserResponse
 import com.example.autobank.data.user.OnlineUser
 import com.example.autobank.repository.user.OnlineUserRepository
-import org.springframework.stereotype.Service
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Service
 
 
 @Service
-class OnlineUserService(val repository: OnlineUserRepository, @Autowired val onlineUserRepository: OnlineUserRepository) {
+class OnlineUserService(
+    val repository: OnlineUserRepository,
+    @Autowired val onlineUserRepository: OnlineUserRepository
+) {
 
     @Autowired
     lateinit var authenticationService: AuthenticationService

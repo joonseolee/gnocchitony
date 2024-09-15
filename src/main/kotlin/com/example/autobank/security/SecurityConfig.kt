@@ -32,7 +32,7 @@ class SecurityConfig() {
     @Bean
     @Throws(Exception::class)
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
-         return http.authorizeHttpRequests { authz ->
+        return http.authorizeHttpRequests { authz ->
             authz.anyRequest().authenticated()
         }.build()
     }

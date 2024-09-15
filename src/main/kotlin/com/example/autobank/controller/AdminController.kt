@@ -11,9 +11,13 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/admin")
-class AdminController(@Autowired val adminService: AdminService, @Autowired val economicrequest: EconomicrequestService, @Autowired val economicRequestReviewService: EconomicRequestReviewService) {
+class AdminController(
+    @Autowired val adminService: AdminService,
+    @Autowired val economicrequest: EconomicrequestService,
+    @Autowired val economicRequestReviewService: EconomicRequestReviewService
+) {
     @GetMapping("/all")
-    fun getAdmins(): ResponseEntity<Any>{
+    fun getAdmins(): ResponseEntity<Any> {
         val admins = adminService.getAdmins()
         return ResponseEntity.ok(admins)
     }
@@ -25,21 +29,25 @@ class AdminController(@Autowired val adminService: AdminService, @Autowired val 
 
 
     data class ApproveEconomicRequestBody(
-            val economicrequest: Economicrequest,
-            val user: OnlineUser,
-            val status: Boolean,
-            val description: String
+        val economicrequest: Economicrequest,
+        val user: OnlineUser,
+        val status: Boolean,
+        val description: String
     )
 
     @PostMapping("/request")
-    fun approveRequest(@RequestBody requestBody: ApproveEconomicRequestBody){
-        if (adminService.checkIfAdmin(requestBody.user)){
-            if (economicRequestReviewService.checkIfRequest(requestBody.economicrequest)){
+    fun approveRequest(@RequestBody requestBody: ApproveEconomicRequestBody) {
+        if (adminService.checkIfAdmin(requestBody.user)) {
+            if (economicRequestReviewService.checkIfRequest(requestBody.economicrequest)) {
                 val review = economicRequestReviewService.getReview(requestBody.economicrequest)
                 economicRequestReviewService.updateStatus(review, requestBody.status)
-            }
-            else {
-                economicRequestReviewService.createEconomicrequestReview(requestBody.status, requestBody.user, requestBody.description, requestBody.economicrequest)
+            } else {
+                economicRequestReviewService.createEconomicrequestReview(
+                    requestBody.status,
+                    requestBody.user,
+                    requestBody.description,
+                    requestBody.economicrequest
+                )
             }
         }
     }
