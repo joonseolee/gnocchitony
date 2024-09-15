@@ -23,9 +23,10 @@
 ```
  {
     "receipt": {
-        "amount": double,
-        "description": string,
-        "name": string,
+        "amount": Double,
+        "description": String,
+        "name": String,
+        "committee_id": Integer
     }, 
     "attachments": [
         base64 string, base64 string, ...
