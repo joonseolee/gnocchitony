@@ -1,7 +1,6 @@
 # autobank
 
 
-All endpoints require are protected. Require valid access token (recieved after auth0 login) in the Authorization header. Use /api/auth/check to check if user exists (or create user from token).
 
 ### application.properties values
 - spring.datasource.url
@@ -11,3 +10,46 @@ All endpoints require are protected. Require valid access token (recieved after 
 - auth0.audience=
 - spring.security.oauth2.resourceserver.jwt.issuer-uri=
 - auth0.domain=
+- azure.storage.container-name=
+- azure.storage.connection-string=
+
+## Current endpoints
+**Header required for all requests**
+
+```"Authorization" "Bearer <access token>"```
+
+### /api/receipt/create
+```POST```
+```
+ {
+    "receipt": {
+        "amount": double,
+        "description": string,
+        "name": string,
+    }, 
+    "attachments": [
+        base64 string, base64 string, ...
+    ] 
+}
+```
+
+### /api/economicrequest/create
+```POST```
+```
+{
+  "subject": String,
+  "purpose": String,
+  "date": "YYYY-MM-DD",
+  "duration": String,
+  "description": String,
+  "amount": Double,
+  "personCount": Integer,
+  "names": String,
+  "paymentDescription": String,
+  "otherInformation": String,
+}
+
+```
+
+
+

@@ -16,4 +16,4 @@ open class OnlineUser(
     @Column(name = "onlineid")
     open val onlineId: String,
 
-)
+    )

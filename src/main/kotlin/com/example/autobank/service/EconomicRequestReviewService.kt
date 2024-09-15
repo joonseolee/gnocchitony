@@ -11,23 +11,38 @@ import java.time.LocalDateTime
 @Service
 class EconomicRequestReviewService {
     @Autowired
-    lateinit var economicRequestReviewRepository : EconomicRequestReviewRepository
-    fun checkIfRequest(economicrequest: Economicrequest) : Boolean {
+    lateinit var economicRequestReviewRepository: EconomicRequestReviewRepository
+    fun checkIfRequest(economicrequest: Economicrequest): Boolean {
         return economicRequestReviewRepository.existsByEconomicRequestId(economicrequest.id)
     }
 
-    fun createEconomicrequestReview (status: Boolean, user: OnlineUser, description: String, economicrequest: Economicrequest) {
+    fun createEconomicrequestReview(
+        status: Boolean,
+        user: OnlineUser,
+        description: String,
+        economicrequest: Economicrequest
+    ) {
         val dato = LocalDateTime.now()
-        val economicRequestReview = EconomicRequestReview( economicRequestReviewId = -1, economicRequestId = economicrequest.id, date = dato, adminID = user.onlineId, description = description, status = status )
+        val economicRequestReview = EconomicRequestReview(
+            economicRequestReviewId = -1,
+            economicRequestId = economicrequest.id,
+            date = dato,
+            adminID = user.onlineId,
+            description = description,
+            status = status
+        )
         economicRequestReviewRepository.save(economicRequestReview)
 
     }
 
-    fun updateStatus(economicRequestReview: EconomicRequestReview, status: Boolean){
-        economicRequestReviewRepository.findEconomicRequestReviewsEconomicRequestIdAndUpdateStatus(economicRequestReview.economicRequestReviewId, status)
+    fun updateStatus(economicRequestReview: EconomicRequestReview, status: Boolean) {
+        economicRequestReviewRepository.findEconomicRequestReviewsEconomicRequestIdAndUpdateStatus(
+            economicRequestReview.economicRequestReviewId,
+            status
+        )
     }
 
-    fun getReview(economicrequest: Economicrequest) : EconomicRequestReview{
+    fun getReview(economicrequest: Economicrequest): EconomicRequestReview {
         return economicRequestReviewRepository.getEconomicRequestReviewByEconomicRequestId(economicrequest.id)
 
     }

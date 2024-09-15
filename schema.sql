@@ -11,32 +11,33 @@ CREATE TABLE committee
     id   INT         NOT NULL PRIMARY KEY IDENTITY (1,1),
     name VARCHAR(55) NOT NULL,
 
+
 );
 
 
-
-CREATE TABLE reciept
+CREATE TABLE receipt
 (
     id            INT            NOT NULL PRIMARY KEY IDENTITY (1,1),
     amount        DECIMAL(10, 2) NOT NULL,
-    comitee_id    INT            NOT NULL,
-    name          VARCHAR(100)   NOT NULL,
+    committee_id    INT            NOT NULL references committee (id),
+    name          VARCHAR(255)   NOT NULL,
     description   TEXT           NOT NULL,
+    createdat          DATETIME       NOT NULL,
     onlineuser_id INT            NOT NULL references onlineuser (id),
 );
 
 CREATE TABLE attachment
 (
     id         INT            NOT NULL PRIMARY KEY IDENTITY (1,1),
-    img        varbinary(MAX) NOT NULL,
-    reciept_id INT            NOT NULL references reciept (id),
+    receipt_id INT            NOT NULL references receipt (id),
+    name       VARCHAR(255)   NOT NULL,
 );
 
 
 CREATE TABLE payment
 (
     id             INT         NOT NULL PRIMARY KEY IDENTITY (1,1),
-    reciept_id     INT         NOT NULL references reciept (id),
+    receipt_id     INT         NOT NULL references receipt (id),
     account_number VARCHAR(55) NOT NULL,
 
 );
@@ -44,7 +45,7 @@ CREATE TABLE payment
 CREATE TABLE card
 (
     id          INT         NOT NULL PRIMARY KEY IDENTITY (1,1),
-    reciept_id  INT         NOT NULL references reciept (id),
+    receipt_id  INT         NOT NULL references receipt (id),
     card_number VARCHAR(16) NOT NULL,
 
 );
