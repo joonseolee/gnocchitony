@@ -1,6 +1,6 @@
 package com.example.autobank.service
 
-import com.example.autobank.data.Attachment
+import com.example.autobank.data.receipt.Attachment
 import com.example.autobank.repository.AttachmentRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -14,6 +14,10 @@ class AttachmentService {
 
     fun createAttachment(attachment: Attachment): Attachment {
         return attachmentRepository.save(attachment);
+    }
+
+    fun getAttachmentsByReceiptId(id: Int): List<Attachment> {
+        return attachmentRepository.findByReceiptId(id);
     }
 
 }
