@@ -7,5 +7,5 @@ import jakarta.persistence.Entity
 class ReceiptResponseBody {
     var receipt: Receipt? = null
     var receiptPaymentInformation: ReceiptPaymentInformation? = null
-    var attachmentnames: Array<String> = arrayOf()
+    var attachments: Array<String> = arrayOf()
 }

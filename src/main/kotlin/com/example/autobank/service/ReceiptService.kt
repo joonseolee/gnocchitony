@@ -67,10 +67,60 @@ class ReceiptService {
 
         val response = ReceiptResponseBody()
         response.receipt = storedReceipt
-        response.attachmentnames = attachmentsnames.toTypedArray()
+        response.attachments = attachmentsnames.toTypedArray()
         response.receiptPaymentInformation = receiptRequestBody.receiptPaymentInformation
 
         return response
+
+    }
+
+    fun getAllReceiptsFromUser(): List<Receipt>? {
+        val user = onlineUserService.getOnlineUser() ?: throw Exception("User not found")
+        val receipts = receiptRepository.findAllByOnlineUserId(user.id)
+
+        for (receipt in receipts) {
+            receipt.onlineUserId = null
+        }
+
+        return receipts
+    }
+
+    fun getReceipt(id: Int): ReceiptResponseBody? {
+        val user = onlineUserService.getOnlineUser() ?: throw Exception("User not found")
+        val receipt = receiptRepository.findById(id).orElseThrow { Exception("Receipt not found") }
+        if (receipt.onlineUserId != user.id) {
+            throw Exception("Receipt not found")
+        }
+        receipt.onlineUserId = null
+
+        val receiptResponseBody = ReceiptResponseBody()
+        receiptResponseBody.receipt = receipt
+
+        val attachments = attachmentService.getAttachmentsByReceiptId(receipt.id)
+        val images = mutableListOf<String>()
+        attachments.forEach { attachment ->
+            images.add(imageService.downloadImage(attachment.name))
+        }
+
+        receiptResponseBody.attachments = attachments.map { it.name }.toTypedArray()
+
+        val payment = paymentRepository.findFirstByReceiptId(receipt.id)
+        if (payment != null) {
+            receiptResponseBody.receiptPaymentInformation = ReceiptPaymentInformation("", payment.account_number, false)
+        } else {
+            val card = cardRepository.findFirstByReceiptId(receipt.id)
+            if (card != null) {
+                receiptResponseBody.receiptPaymentInformation = ReceiptPaymentInformation(card.card_number, "", true)
+            } else {
+                throw Exception("Payment information not found")
+            }
+        }
+
+        return receiptResponseBody
+
+
+
+
 
     }
 

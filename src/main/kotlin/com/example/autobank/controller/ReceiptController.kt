@@ -32,11 +32,31 @@ class ReceiptController() {
     }
 
     /* For testing. temporary */
-    @GetMapping("/get/{id}")
+    @GetMapping("/getimage/{id}")
     fun getReceipt(@PathVariable id: String): String {
         return imageService.downloadImage(id)
     }
     /*  */
+
+    @GetMapping("/getall")
+    fun getAllReceipts(): ResponseEntity<List<Receipt>> {
+        return try {
+            val res = receiptService.getAllReceiptsFromUser()
+            ResponseEntity.ok(res)
+        } catch (e: Exception) {
+            ResponseEntity.badRequest().build()
+        }
+    }
+
+    @GetMapping("/get/{id}")
+    fun getReceipt(@PathVariable id: Int): ResponseEntity<ReceiptResponseBody> {
+        return try {
+            val res = receiptService.getReceipt(id)
+            ResponseEntity.ok(res)
+        } catch (e: Exception) {
+            ResponseEntity.badRequest().build()
+        }
+    }
 
 
 }

@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface CardRepository : JpaRepository<Card, Int> {
+    fun findFirstByReceiptId(id: Int): Card?
+
 
 
 }

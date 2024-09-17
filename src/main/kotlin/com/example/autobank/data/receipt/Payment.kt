@@ -13,7 +13,7 @@ class Payment (
     val id: Int,
 
     @Column(name = "receipt_id")
-    val receipt_id: Int,
+    val receiptId: Int,
 
     @Column(name = "account_number")
     val account_number: String,
