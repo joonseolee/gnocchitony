@@ -22,14 +22,9 @@ class AuthenticationController {
 
     @GetMapping("/check")
     fun checkUser(): ResponseEntity<AuthenticatedUserResponse> {
-        val sub: String
-        try {
-            sub = authenticationService.getUserSub();
-        } catch (e: Exception) {
-            return ResponseEntity.badRequest().build();
-        }
+
         return try {
-            ResponseEntity.ok(onlineUserService.checkStoredUserBySub(sub))
+            ResponseEntity.ok(onlineUserService.checkUser())
         } catch (e: Exception) {
             ResponseEntity.badRequest().build();
         }

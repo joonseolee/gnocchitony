@@ -10,25 +10,27 @@ import org.springframework.stereotype.Service
 
 @Service
 class OnlineUserService(
-    val repository: OnlineUserRepository,
-    @Autowired val onlineUserRepository: OnlineUserRepository
 ) {
 
     @Autowired
     lateinit var authenticationService: AuthenticationService
+
+    @Autowired
+    lateinit var onlineUserRepository: OnlineUserRepository
+
+
+
 
     fun getOnlineUser(): OnlineUser? {
         val sub: String = authenticationService.getUserSub()
         return onlineUserRepository.findByOnlineId(sub)
     }
 
-    fun checkStoredUserBySub(sub: String): AuthenticatedUserResponse {
-        if (sub.isEmpty()) {
-            return AuthenticatedUserResponse(success = false, false)
-        }
-        val storedUser = onlineUserRepository.findByOnlineId(sub)
+    fun checkUser(): AuthenticatedUserResponse {
+
+        val storedUser = onlineUserRepository.findByOnlineId(authenticationService.getUserSub())
         return if (storedUser != null) {
-            AuthenticatedUserResponse(success = true, false)
+            AuthenticatedUserResponse(success = true, authenticationService.checkBankomMembership())
         } else {
             return createOnlineUser()
         }
@@ -50,10 +52,11 @@ class OnlineUserService(
 
             onlineUserRepository.save(onlineUser)
 
-            return AuthenticatedUserResponse(success = true, false)
+            return AuthenticatedUserResponse(success = true, authenticationService.checkBankomMembership())
         } catch (e: Exception) {
             println(e)
             return AuthenticatedUserResponse(success = false, false)
         }
     }
+
 }

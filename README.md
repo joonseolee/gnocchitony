@@ -12,6 +12,7 @@
 - auth0.domain=
 - azure.storage.container-name=
 - azure.storage.connection-string=
+- environment = dev | prod
 
 ## Current endpoints
 **Header required for all requests**
