@@ -25,8 +25,8 @@
 ```
 {
     "success": Boolean,
-    "admin": Boolean,
-    "superadmin": Boolean,
+    "isadmin": Boolean,
+    "issuperadmin": Boolean,
 }
 ```
 
