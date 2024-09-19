@@ -32,6 +32,9 @@ class AuthenticationService {
     @Value("\${environment}")
     private val environment: String = ""
 
+    @Value("\${superadmin.emails}")
+    private val superadminEmails: String = ""
+
     fun getAuth0User(token: String): Auth0User {
         return Auth0User("sub", "email", "name")
     }
@@ -119,6 +122,10 @@ class AuthenticationService {
         val userId = fetchOnlineuserId()
         val userCommittees = fetchUserCommittees(userId)
         return userCommittees.contains(adminCommitteeNameLong)
+    }
+
+    fun checkSuperAdmin(): Boolean {
+        return superadminEmails.split(",").contains(getUserDetails().email)
     }
 
     data class Result(

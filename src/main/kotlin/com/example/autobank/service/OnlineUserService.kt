@@ -27,17 +27,14 @@ class OnlineUserService(
     }
 
     fun checkUser(): AuthenticatedUserResponse {
-
-        val storedUser = onlineUserRepository.findByOnlineId(authenticationService.getUserSub())
-        return if (storedUser != null) {
-            AuthenticatedUserResponse(success = true, authenticationService.checkBankomMembership())
-        } else {
-            return createOnlineUser()
+        var storedUser = onlineUserRepository.findByOnlineId(authenticationService.getUserSub())
+        if (storedUser == null) {
+            storedUser = createOnlineUser()
         }
+        return AuthenticatedUserResponse(success = true, authenticationService.checkBankomMembership(), authenticationService.checkSuperAdmin())
     }
 
-    fun createOnlineUser(): AuthenticatedUserResponse {
-        try {
+    fun createOnlineUser(): OnlineUser {
             val userinfo: Auth0User = authenticationService.getUserDetails()
             val onlineUser = OnlineUser(
                 id = 0,
@@ -46,17 +43,7 @@ class OnlineUserService(
                 fullname = userinfo.name,
             )
 
-            if (onlineUser.onlineId.isEmpty() || onlineUser.email.isEmpty() || onlineUser.fullname.isEmpty()) {
-                return AuthenticatedUserResponse(success = false, false)
-            }
-
-            onlineUserRepository.save(onlineUser)
-
-            return AuthenticatedUserResponse(success = true, authenticationService.checkBankomMembership())
-        } catch (e: Exception) {
-            println(e)
-            return AuthenticatedUserResponse(success = false, false)
-        }
+            return onlineUserRepository.save(onlineUser)
     }
 
 }
