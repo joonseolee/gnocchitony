@@ -12,11 +12,23 @@
 - auth0.domain=
 - azure.storage.container-name=
 - azure.storage.connection-string=
+- environment = dev | prod
+- superadmin.emails =
 
 ## Current endpoints
 **Header required for all requests**
 
 ```"Authorization" "Bearer <access token>"```
+
+### /api/auth/check
+```GET```
+```
+{
+    "success": Boolean,
+    "isadmin": Boolean,
+    "issuperadmin": Boolean,
+}
+```
 
 ### /api/receipt/create
 ```POST```
@@ -30,7 +42,12 @@
     }, 
     "attachments": [
         base64 string, base64 string, ...
-    ] 
+    ], 
+    "receiptPaymentInformation": {
+        cardnumber: String?,
+        accountnumber: String?,
+        usedOnlineCard: Boolean,
+    }
 }
 ```
 

@@ -10,32 +10,31 @@ import org.springframework.stereotype.Service
 
 @Service
 class OnlineUserService(
-    val repository: OnlineUserRepository,
-    @Autowired val onlineUserRepository: OnlineUserRepository
 ) {
 
     @Autowired
     lateinit var authenticationService: AuthenticationService
+
+    @Autowired
+    lateinit var onlineUserRepository: OnlineUserRepository
+
+
+
 
     fun getOnlineUser(): OnlineUser? {
         val sub: String = authenticationService.getUserSub()
         return onlineUserRepository.findByOnlineId(sub)
     }
 
-    fun checkStoredUserBySub(sub: String): AuthenticatedUserResponse {
-        if (sub.isEmpty()) {
-            return AuthenticatedUserResponse(success = false, false)
+    fun checkUser(): AuthenticatedUserResponse {
+        var storedUser = onlineUserRepository.findByOnlineId(authenticationService.getUserSub())
+        if (storedUser == null) {
+            storedUser = createOnlineUser()
         }
-        val storedUser = onlineUserRepository.findByOnlineId(sub)
-        return if (storedUser != null) {
-            AuthenticatedUserResponse(success = true, false)
-        } else {
-            return createOnlineUser()
-        }
+        return AuthenticatedUserResponse(success = true, authenticationService.checkBankomMembership(), authenticationService.checkSuperAdmin())
     }
 
-    fun createOnlineUser(): AuthenticatedUserResponse {
-        try {
+    fun createOnlineUser(): OnlineUser {
             val userinfo: Auth0User = authenticationService.getUserDetails()
             val onlineUser = OnlineUser(
                 id = 0,
@@ -44,16 +43,7 @@ class OnlineUserService(
                 fullname = userinfo.name,
             )
 
-            if (onlineUser.onlineId.isEmpty() || onlineUser.email.isEmpty() || onlineUser.fullname.isEmpty()) {
-                return AuthenticatedUserResponse(success = false, false)
-            }
-
-            onlineUserRepository.save(onlineUser)
-
-            return AuthenticatedUserResponse(success = true, false)
-        } catch (e: Exception) {
-            println(e)
-            return AuthenticatedUserResponse(success = false, false)
-        }
+            return onlineUserRepository.save(onlineUser)
     }
+
 }
