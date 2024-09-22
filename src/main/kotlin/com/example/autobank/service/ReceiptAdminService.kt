@@ -7,6 +7,7 @@ import com.example.autobank.repository.receipt.ReceiptRepository
 import org.springframework.beans.factory.annotation.Autowired
 import com.example.autobank.repository.receipt.ReceiptInfoViewRepository
 import com.example.autobank.data.receipt.*
+import com.example.autobank.data.ReceiptReviewRequestBody
 
 
 @Service
@@ -71,6 +72,10 @@ class ReceiptAdminService {
             card.card_number,
             images
         )
+
+    }
+
+    fun createReceiptReview(reviewBody: ReceiptReviewRequestBody) {
 
     }
 }

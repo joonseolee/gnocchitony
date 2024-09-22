@@ -24,7 +24,7 @@ class ReceiptReview (
     val comment: String,
 
     @Column(name = "onlineuser_id")
-    var onlineUserId: Int?,
+    var onlineUserId: Int,
 
     @CreationTimestamp
     @Column(name = "createdat")

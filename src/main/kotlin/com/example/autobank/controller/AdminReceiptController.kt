@@ -12,7 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.PathVariable
 import com.example.autobank.data.receipt.ReceiptInfo
 import com.example.autobank.service.AuthenticationService
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
+import com.example.autobank.data.ReceiptReviewRequestBody
+import com.example.autobank.data.receipt.ReceiptReview
+import com.example.autobank.service.ReceiptReviewService
 
 
 @RestController
@@ -24,6 +29,10 @@ class AdminReceiptController {
 
     @Autowired
     lateinit var authenticationService: AuthenticationService
+
+    @Autowired
+    lateinit var receiptReviewService: ReceiptReviewService
+
 
     @GetMapping("/all")
     fun getAllReceipts( @RequestParam from: Int, @RequestParam count: Int)
@@ -42,6 +51,20 @@ class AdminReceiptController {
         }
 
         return ResponseEntity.ok(receiptAdminService.getReceipt(id))
+    }
+
+    @PostMapping("/review")
+    fun reviewReceipt(@RequestBody reviewBody: ReceiptReviewRequestBody): ResponseEntity<ReceiptReview> {
+        if (!authenticationService.checkBankomMembership()) {
+            return ResponseEntity.status(403).build()
+        }
+        try {
+            return ResponseEntity.ok(receiptReviewService.createReceiptReview(reviewBody));
+        } catch (e: Exception) {
+            println(e)
+            return ResponseEntity.badRequest().build()
+        }
+
     }
 
 
