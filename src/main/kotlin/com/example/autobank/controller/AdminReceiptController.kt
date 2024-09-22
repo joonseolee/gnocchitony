@@ -34,7 +34,7 @@ class AdminReceiptController {
 
         return ResponseEntity.ok(receiptAdminService.getAll(from, count))
     }
-/*
+
     @GetMapping("/get/{id}")
     fun getReceipt(@PathVariable id: Int): ResponseEntity<CompleteReceipt> {
         if (!authenticationService.checkBankomMembership()) {
@@ -43,6 +43,6 @@ class AdminReceiptController {
 
         return ResponseEntity.ok(receiptAdminService.getReceipt(id))
     }
-*/
+
 
 }

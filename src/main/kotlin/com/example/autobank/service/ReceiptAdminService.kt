@@ -18,6 +18,14 @@ class ReceiptAdminService {
     @Autowired
     lateinit var receiptInfoViewRepository: ReceiptInfoViewRepository
 
+    @Autowired
+    lateinit var paymentCardService: PaymentCardService
+
+    @Autowired
+    lateinit var imageService: ImageService
+
+    @Autowired
+    lateinit var attachmentService: AttachmentService
 
     fun getAll(from: Int, count: Int): List<ReceiptInfo>? {
         try {
@@ -26,34 +34,28 @@ class ReceiptAdminService {
             return receiptInfoViewRepository.findAll().subList(0, 5)
         }
     }
-/*
+
     fun getReceipt(id: Int): CompleteReceipt? {
         val receipt = receiptInfoViewRepository.findByReceiptId(id)
         if (receipt == null) {
             return null
         }
 
-        if (receipt.paymentOrCard == "PAYMENT") {
-            val payment = receiptRepository.findByReceiptId(id)
-            return CompleteReceipt(
-                receipt.receiptId,
-                receipt.amount,
-                receipt.receiptName,
-                receipt.receiptDescription,
-                receipt.receiptCreatedAt,
-                receipt.committeeName,
-                receipt.userFullname,
-                receipt.paymentOrCard,
-                receipt.attachmentCount,
-                receipt.latestReviewStatus,
-                receipt.latestReviewCreatedAt,
-                payment.paymentAccountNumber,
-                "",
-                emptyList()
-            )
-        }
+        var card: Card = Card(0, 0, "")
+        var payment: Payment = Payment(0, 0, "")
 
-        CompleteReceipt(
+        if (receipt.paymentOrCard == "Card") {
+            card = paymentCardService.getCardByReceiptId(receipt.receiptId)
+        } else if (receipt.paymentOrCard == "Payment") {
+            payment = paymentCardService.getPaymentByReceiptId(receipt.receiptId)
+        }
+        println(receipt.paymentOrCard)
+
+        // Get images
+        val attachments = attachmentService.getAttachmentsByReceiptId(receipt.receiptId)
+        val images = attachments.map { attachment -> imageService.downloadImage(attachment.name) }
+
+        return CompleteReceipt(
             receipt.receiptId,
             receipt.amount,
             receipt.receiptName,
@@ -64,10 +66,11 @@ class ReceiptAdminService {
             receipt.paymentOrCard,
             receipt.attachmentCount,
             receipt.latestReviewStatus,
-            receipt.latestReviewCreatedAt
+            receipt.latestReviewCreatedAt,
+            payment.account_number,
+            card.card_number,
+            images
         )
 
-
-
-    }*/
+    }
 }

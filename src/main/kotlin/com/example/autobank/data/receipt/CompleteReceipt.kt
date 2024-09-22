@@ -27,9 +27,9 @@ data class CompleteReceipt(
 
     val attachmentCount: Int,
 
-    val latestReviewStatus: String,
+    val latestReviewStatus: String?,
 
-    val latestReviewCreatedAt: LocalDateTime,
+    val latestReviewCreatedAt: LocalDateTime?,
 
     val paymentAccountNumber: String,
 
@@ -37,6 +37,7 @@ data class CompleteReceipt(
     val cardCardNumber: String,
 
     val attachments: List<String>
+
 
 
 )

@@ -3,6 +3,7 @@ package com.example.autobank.service
 import com.azure.storage.blob.BlobContainerClient
 import com.azure.storage.blob.BlobServiceClientBuilder
 import net.coobird.thumbnailator.Thumbnails
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import java.io.ByteArrayInputStream
@@ -58,6 +59,7 @@ class ImageService(
             return Base64.getEncoder().encodeToString(imageData)
         }
     }
+
 
 
 }
