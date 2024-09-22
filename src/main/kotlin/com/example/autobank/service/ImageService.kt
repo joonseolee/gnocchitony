@@ -31,7 +31,7 @@ class ImageService(
 
         val blobClient = blobContainerClient.getBlobClient(filename)
         blobClient.upload(resized.inputStream(), resized.size.toLong())
-
+        println("Uploaded image to $filename")
         return filename
     }
 

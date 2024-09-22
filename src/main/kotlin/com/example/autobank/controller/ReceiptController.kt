@@ -26,6 +26,7 @@ class ReceiptController() {
             val res = receiptService.createReceipt(receipt)
             ResponseEntity.ok(res)
         } catch (e: Exception) {
+            println(e)
             ResponseEntity.badRequest().build()
         }
 
