@@ -70,7 +70,7 @@ CREATE TABLE receiptreview
 (
     id            INT            NOT NULL PRIMARY KEY IDENTITY (1,1),
     receipt_id    INT            NOT NULL references receipt (id),
-    status        VARCHAR(55)           NOT NULL,
+    status        VARCHAR(20) NOT NULL CHECK (status IN('APPROVED', 'DENIED')),
     comment       VARCHAR(500)        NOT NULL,
     createdat     DATETIME       NOT NULL,
     onlineuser_id INT            NOT NULL references onlineuser (id),

@@ -1,7 +1,5 @@
 package com.example.autobank.repository.receipt
 
-
-import com.example.autobank.data.receipt.ReceiptInfo
 import com.example.autobank.data.receipt.ReceiptReview
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
