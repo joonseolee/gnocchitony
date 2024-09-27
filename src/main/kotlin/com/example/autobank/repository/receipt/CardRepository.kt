@@ -1,4 +1,4 @@
-package com.example.autobank.repository
+package com.example.autobank.repository.receipt
 
 import com.example.autobank.data.receipt.Card
 import org.springframework.data.jpa.repository.JpaRepository

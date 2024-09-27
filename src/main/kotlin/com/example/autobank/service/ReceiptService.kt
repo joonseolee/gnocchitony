@@ -1,9 +1,9 @@
 package com.example.autobank.service
 
 import com.example.autobank.data.receipt.*
-import com.example.autobank.repository.CardRepository
-import com.example.autobank.repository.PaymentRepository
-import com.example.autobank.repository.ReceiptRepository
+import com.example.autobank.repository.receipt.CardRepository
+import com.example.autobank.repository.receipt.PaymentRepository
+import com.example.autobank.repository.receipt.ReceiptRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -53,6 +53,9 @@ class ReceiptService {
         /**
          * Save payment information
          */
+        println(receiptRequestBody.receiptPaymentInformation?.cardnumber != null)
+        println(receiptRequestBody.receiptPaymentInformation?.cardnumber != "")
+        println(receiptRequestBody.receiptPaymentInformation?.usedOnlineCard)
         if (receiptRequestBody.receiptPaymentInformation != null && receiptRequestBody.receiptPaymentInformation.usedOnlineCard && receiptRequestBody.receiptPaymentInformation.cardnumber != null && receiptRequestBody.receiptPaymentInformation.cardnumber != "") {
             val card = Card(0, storedReceipt.id, receiptRequestBody.receiptPaymentInformation.cardnumber)
             cardRepository.save(card)

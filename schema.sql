@@ -14,14 +14,13 @@ CREATE TABLE committee
 
 );
 
-
 CREATE TABLE receipt
 (
     id            INT            NOT NULL PRIMARY KEY IDENTITY (1,1),
     amount        DECIMAL(10, 2) NOT NULL,
     committee_id    INT            NOT NULL references committee (id),
     name          VARCHAR(255)   NOT NULL,
-    description   TEXT           NOT NULL,
+    description   VARCHAR(500)           NOT NULL,
     createdat          DATETIME       NOT NULL,
     onlineuser_id INT            NOT NULL references onlineuser (id),
 );
@@ -54,15 +53,60 @@ CREATE TABLE economicrequest
 (
     id                 INT            NOT NULL PRIMARY KEY IDENTITY (1,1),
     subject            VARCHAR(55)    NOT NULL,
-    purpose            TEXT           NOT NULL,
+    purpose            VARCHAR(500)           NOT NULL,
     date               DATE           NOT NULL,
     duration           VARCHAR(255)   NOT NULL,
-    description        TEXT           NOT NULL,
+    description         VARCHAR(500)           NOT NULL,
     amount             DECIMAL(10, 2) NOT NULL,
     personcount        INT            NOT NULL,
-    names              varchar(max)   NOT NULL,
+    names              VARCHAR(500)   NOT NULL,
     paymentdescription varchar(255)   NOT NULL,
-    otherinformation   varchar(max)   NOT NULL,
+    otherinformation   VARCHAR(500)   NOT NULL,
     createdat          DATETIME       NOT NULL,
     onlineuser_id      INT            NOT NULL references onlineuser (id),
 );
+
+CREATE TABLE receiptreview
+(
+    id            INT            NOT NULL PRIMARY KEY IDENTITY (1,1),
+    receipt_id    INT            NOT NULL references receipt (id),
+    status        VARCHAR(20) NOT NULL CHECK (status IN('APPROVED', 'DENIED')),
+    comment       VARCHAR(500)        NOT NULL,
+    createdat     DATETIME       NOT NULL,
+    onlineuser_id INT            NOT NULL references onlineuser (id),
+);
+
+CREATE VIEW receipt_info AS
+SELECT
+    r.id AS receipt_id,
+    r.amount,
+    MAX(r.name) AS receipt_name,
+    MAX(r.description) AS receipt_description,
+    MAX(r.createdat) AS receipt_created_at,
+    MAX(c.name) AS committee_name,
+    MAX(ou.fullname) AS user_fullname,
+
+    CASE
+        WHEN MAX(p.id) IS NOT NULL THEN 'Payment'
+        WHEN MAX(ca.id) IS NOT NULL THEN 'Card'
+        ELSE 'None'
+        END AS payment_or_card,
+
+    COUNT(a.id) AS attachment_count
+
+FROM
+    receipt r
+        LEFT JOIN
+    committee c ON r.committee_id = c.id
+        LEFT JOIN
+    onlineuser ou ON r.onlineuser_id = ou.id
+        LEFT JOIN
+    payment p ON r.id = p.receipt_id
+        LEFT JOIN
+    card ca ON r.id = ca.receipt_id
+        LEFT JOIN
+    attachment a ON r.id = a.receipt_id
+GROUP BY
+    r.id, r.amount;
+
+
