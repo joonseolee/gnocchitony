@@ -16,6 +16,12 @@ java {
     sourceCompatibility = '17'
 }
 
+bootJar {
+    archiveBaseName = 'autobank-image'
+    archiveVersion = ''
+    mainClass = 'com.example.autobank.AutobankApplicationKt'  // Kotlin class with 'Kt' suffix
+}
+
 repositories {
     mavenCentral()
 }
