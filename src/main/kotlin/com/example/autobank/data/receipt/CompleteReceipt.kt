@@ -31,6 +31,8 @@ data class CompleteReceipt(
 
     val latestReviewCreatedAt: LocalDateTime?,
 
+    val latestReviewComment: String?,
+
     val paymentAccountNumber: String,
 
 

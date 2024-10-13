@@ -42,5 +42,9 @@ class ReceiptInfo(
     val latestReviewStatus: String,
 
     @Column(name = "latest_review_created_at")
-    val latestReviewCreatedAt: LocalDateTime
+    val latestReviewCreatedAt: LocalDateTime,
+
+    @Column(name = "latest_review_comment")
+    val latestReviewComment: String,
+
 )

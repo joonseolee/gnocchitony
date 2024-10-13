@@ -68,6 +68,7 @@ class ReceiptAdminService {
             receipt.attachmentCount,
             receipt.latestReviewStatus,
             receipt.latestReviewCreatedAt,
+            receipt.latestReviewComment,
             payment.account_number,
             card.card_number,
             images
