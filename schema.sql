@@ -84,6 +84,7 @@ SELECT r.id               AS receipt_id,
        MAX(r.createdat)   AS receipt_created_at,
        MAX(c.name)        AS committee_name,
        MAX(ou.fullname)   AS user_fullname,
+       MAX(ou.id)         AS user_id,
 
        CASE
            WHEN MAX(p.id) IS NOT NULL THEN 'Payment'

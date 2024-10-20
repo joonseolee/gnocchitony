@@ -3,9 +3,13 @@ package com.example.autobank.service
 import com.example.autobank.data.receipt.*
 import com.example.autobank.repository.receipt.CardRepository
 import com.example.autobank.repository.receipt.PaymentRepository
+import com.example.autobank.repository.receipt.ReceiptInfoViewRepository
 import com.example.autobank.repository.receipt.ReceiptRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 @Service
 
@@ -28,6 +32,12 @@ class ReceiptService {
 
     @Autowired
     lateinit var paymentRepository: PaymentRepository
+
+    @Autowired
+    lateinit var receiptInfoViewRepository: ReceiptInfoViewRepository
+
+    @Autowired
+    lateinit var paymentCardService: PaymentCardService
 
 
 
@@ -77,52 +87,62 @@ class ReceiptService {
 
     }
 
-    fun getAllReceiptsFromUser(): List<Receipt>? {
+    fun getAllReceiptsFromUser(from: Int, count: Int): List<ReceiptInfo>? {
         val user = onlineUserService.getOnlineUser() ?: throw Exception("User not found")
-        val receipts = receiptRepository.findAllByOnlineUserId(user.id)
 
-        for (receipt in receipts) {
-            receipt.onlineUserId = null
-        }
+        val pageable = PageRequest.of(from, count)
+        val page: Page<ReceiptInfo> = receiptInfoViewRepository.findByUserId(pageable, user.id)
 
-        return receipts
+        return page.toList()
     }
 
-    fun getReceipt(id: Int): ReceiptResponseBody? {
+    fun getReceipt(id: Int): CompleteReceipt? {
         val user = onlineUserService.getOnlineUser() ?: throw Exception("User not found")
-        val receipt = receiptRepository.findById(id).orElseThrow { Exception("Receipt not found") }
-        if (receipt.onlineUserId != user.id) {
-            throw Exception("Receipt not found")
-        }
-        receipt.onlineUserId = null
-
-        val receiptResponseBody = ReceiptResponseBody()
-        receiptResponseBody.receipt = receipt
-
-        val attachments = attachmentService.getAttachmentsByReceiptId(receipt.id)
-        val images = mutableListOf<String>()
-        attachments.forEach { attachment ->
-            images.add(imageService.downloadImage(attachment.name))
+        val receipt = receiptInfoViewRepository.findByReceiptId(id)
+        if (receipt == null || receipt.userId != user.id) {
+            return null
         }
 
-        receiptResponseBody.attachments = attachments.map { it.name }.toTypedArray()
+        return getCompleteReceipt(receipt)
 
-        val payment = paymentRepository.findFirstByReceiptId(receipt.id)
-        if (payment != null) {
-            receiptResponseBody.receiptPaymentInformation = ReceiptPaymentInformation("", payment.account_number, false)
-        } else {
-            val card = cardRepository.findFirstByReceiptId(receipt.id)
-            if (card != null) {
-                receiptResponseBody.receiptPaymentInformation = ReceiptPaymentInformation(card.card_number, "", true)
-            } else {
-                throw Exception("Payment information not found")
-            }
+
+
+
+
+    }
+
+    fun getCompleteReceipt(receipt: ReceiptInfo): CompleteReceipt {
+        var card = Card(0, 0, "")
+        var payment = Payment(0, 0, "")
+
+        if (receipt.paymentOrCard == "Card") {
+            card = paymentCardService.getCardByReceiptId(receipt.receiptId)
+        } else if (receipt.paymentOrCard == "Payment") {
+            payment = paymentCardService.getPaymentByReceiptId(receipt.receiptId)
         }
+        println(receipt.paymentOrCard)
 
-        return receiptResponseBody
+        // Get images
+        val attachments = attachmentService.getAttachmentsByReceiptId(receipt.receiptId)
+        val images = attachments.map { attachment -> imageService.downloadImage(attachment.name) }
 
-
-
+        return CompleteReceipt(
+            receipt.receiptId,
+            receipt.amount,
+            receipt.receiptName,
+            receipt.receiptDescription,
+            receipt.receiptCreatedAt,
+            receipt.committeeName,
+            receipt.userFullname,
+            receipt.paymentOrCard,
+            receipt.attachmentCount,
+            receipt.latestReviewStatus,
+            receipt.latestReviewCreatedAt,
+            receipt.latestReviewComment,
+            payment.account_number,
+            card.card_number,
+            images
+        )
 
 
     }

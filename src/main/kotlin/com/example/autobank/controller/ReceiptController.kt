@@ -1,21 +1,20 @@
 package com.example.autobank.controller
 
-import com.example.autobank.data.receipt.Receipt
-import com.example.autobank.data.receipt.ReceiptRequestBody
-import com.example.autobank.data.receipt.ReceiptResponseBody
+import com.example.autobank.data.receipt.*
 import com.example.autobank.service.ImageService
 import com.example.autobank.service.ReceiptService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.repository.query.Param
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 
 @RestController
 @RequestMapping("/api/receipt")
-class ReceiptController() {
+class ReceiptController {
 
     @Autowired
-    lateinit var imageService: ImageService;
+    lateinit var imageService: ImageService
 
     @Autowired
     lateinit var receiptService: ReceiptService
@@ -40,9 +39,10 @@ class ReceiptController() {
     /*  */
 
     @GetMapping("/getall")
-    fun getAllReceipts(): ResponseEntity<List<Receipt>> {
+    fun getAllReceipts(@Param("page") from: Int, @Param("count") count: Int): ResponseEntity<List<ReceiptInfo>> {
+
         return try {
-            val res = receiptService.getAllReceiptsFromUser()
+            val res = receiptService.getAllReceiptsFromUser(from, count)
             ResponseEntity.ok(res)
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
@@ -50,7 +50,7 @@ class ReceiptController() {
     }
 
     @GetMapping("/get/{id}")
-    fun getReceipt(@PathVariable id: Int): ResponseEntity<ReceiptResponseBody> {
+    fun getReceipt(@PathVariable id: Int): ResponseEntity<CompleteReceipt> {
         return try {
             val res = receiptService.getReceipt(id)
             ResponseEntity.ok(res)
