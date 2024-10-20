@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import com.example.autobank.repository.receipt.ReceiptInfoViewRepository
 import com.example.autobank.data.receipt.*
 import com.example.autobank.data.ReceiptReviewRequestBody
+import org.springframework.data.domain.PageRequest
 
 
 @Service
@@ -20,6 +21,9 @@ class ReceiptAdminService {
     lateinit var receiptInfoViewRepository: ReceiptInfoViewRepository
 
     @Autowired
+    lateinit var receiptService: ReceiptService
+
+    @Autowired
     lateinit var paymentCardService: PaymentCardService
 
     @Autowired
@@ -29,11 +33,10 @@ class ReceiptAdminService {
     lateinit var attachmentService: AttachmentService
 
     fun getAll(from: Int, count: Int): List<ReceiptInfo>? {
-        try {
-            return receiptInfoViewRepository.findAll().subList(from, from + count)
-        } catch (e: Exception) {
-            return receiptInfoViewRepository.findAll().subList(0, 5)
-        }
+
+        val pageable = PageRequest.of(from, count)
+        return receiptInfoViewRepository.findAll(pageable).toList()
+
     }
 
     fun getReceipt(id: Int): CompleteReceipt? {
@@ -42,37 +45,7 @@ class ReceiptAdminService {
             return null
         }
 
-        var card: Card = Card(0, 0, "")
-        var payment: Payment = Payment(0, 0, "")
-
-        if (receipt.paymentOrCard == "Card") {
-            card = paymentCardService.getCardByReceiptId(receipt.receiptId)
-        } else if (receipt.paymentOrCard == "Payment") {
-            payment = paymentCardService.getPaymentByReceiptId(receipt.receiptId)
-        }
-        println(receipt.paymentOrCard)
-
-        // Get images
-        val attachments = attachmentService.getAttachmentsByReceiptId(receipt.receiptId)
-        val images = attachments.map { attachment -> imageService.downloadImage(attachment.name) }
-
-        return CompleteReceipt(
-            receipt.receiptId,
-            receipt.amount,
-            receipt.receiptName,
-            receipt.receiptDescription,
-            receipt.receiptCreatedAt,
-            receipt.committeeName,
-            receipt.userFullname,
-            receipt.paymentOrCard,
-            receipt.attachmentCount,
-            receipt.latestReviewStatus,
-            receipt.latestReviewCreatedAt,
-            receipt.latestReviewComment,
-            payment.account_number,
-            card.card_number,
-            images
-        )
+        return receiptService.getCompleteReceipt(receipt)
 
     }
 

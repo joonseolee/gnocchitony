@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import com.example.autobank.data.ReceiptReviewRequestBody
 import com.example.autobank.data.receipt.ReceiptReview
 import com.example.autobank.service.ReceiptReviewService
+import org.springframework.data.repository.query.Param
 
 
 @RestController
@@ -35,7 +36,7 @@ class AdminReceiptController {
 
 
     @GetMapping("/all")
-    fun getAllReceipts( @RequestParam from: Int, @RequestParam count: Int)
+    fun getAllReceipts(@Param("page") from: Int, @Param("count") count: Int)
         : ResponseEntity<List<ReceiptInfo>> {
         if (!authenticationService.checkBankomMembership()) {
             return ResponseEntity.status(403).build()

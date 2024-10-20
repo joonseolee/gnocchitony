@@ -32,6 +32,9 @@ class ReceiptInfo(
     @Column(name = "user_fullname")
     val userFullname: String,
 
+    @Column(name = "user_id")
+    val userId: Int,
+
     @Column(name = "payment_or_card")
     val paymentOrCard: String,
 
