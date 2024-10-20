@@ -7,6 +7,5 @@ FROM openjdk:17
 EXPOSE 8080
 COPY --from=build /home/gradle/src/build/libs/autobank-image.jar /app/
 RUN bash -c 'touch /app/autobank-image.jar'
-
 ENTRYPOINT ["java", "-XX:+UnlockExperimentalVMOptions", "-Djava.security.egd=file:/dev/./urandom","-jar","/app/autobank-image.jar"]
 
