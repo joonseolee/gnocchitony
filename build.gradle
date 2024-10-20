@@ -16,6 +16,12 @@ java {
     sourceCompatibility = '17'
 }
 
+bootJar {
+    archiveBaseName = 'autobank-image'
+    archiveVersion = ''
+    mainClass = 'com.example.autobank.AutobankApplicationKt'  // Kotlin class with 'Kt' suffix
+}
+
 repositories {
     mavenCentral()
 }
@@ -25,7 +31,7 @@ ext {
 }
 
 dependencies {
-    implementation 'com.microsoft.sqlserver:mssql-jdbc:12.5.0.jre11-preview'
+    implementation 'com.microsoft.sqlserver:mssql-jdbc:12.8.1.jre11'
     implementation 'org.springframework.boot:spring-boot-starter-data-rest'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
@@ -42,8 +48,6 @@ dependencies {
     implementation "org.springframework.security:spring-security-oauth2-jose"
 
     implementation 'com.azure:azure-storage-blob:12.27.1'
-
-
     implementation 'net.coobird:thumbnailator:0.4.20'
 
 
