@@ -96,12 +96,18 @@ class AuthenticationService {
         return response.body?.get("id").toString().toInt()
     }
 
-    private fun fetchUserCommittees(userid: Int): List<String> {
+    fun fetchUserCommittees(): List<String> {
+
+        if (environment != "prod") {
+            return listOf("Applikasjonskomiteen", "Trivselskomiteen")
+        }
+
+        val userId = fetchOnlineuserId()
 
         val headers = HttpHeaders()
         val entity = HttpEntity<Void>(headers)
         val response: ResponseEntity<UserCommitteeResponse> = restTemplate.exchange(
-            fetchUserCommitteesUrl + userid,
+            fetchUserCommitteesUrl + userId,
             HttpMethod.GET,
             entity,
             object : ParameterizedTypeReference<UserCommitteeResponse>() {}
@@ -120,7 +126,7 @@ class AuthenticationService {
         }
 
         val userId = fetchOnlineuserId()
-        val userCommittees = fetchUserCommittees(userId)
+        val userCommittees = fetchUserCommittees()
         return userCommittees.contains(adminCommitteeNameLong)
     }
 

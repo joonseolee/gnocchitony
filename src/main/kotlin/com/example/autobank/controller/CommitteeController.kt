@@ -3,6 +3,7 @@ package com.example.autobank.controller
 import com.example.autobank.data.Committee
 import com.example.autobank.data.Economicrequest
 import com.example.autobank.data.user.OnlineUser
+import com.example.autobank.data.user.UserCommitteeResponseBody
 import com.example.autobank.repository.CommitteeRepository
 import com.example.autobank.service.AdminService
 import com.example.autobank.service.CommitteeService
@@ -28,6 +29,15 @@ class CommitteeController(
         } catch (e: Exception) {
             ResponseEntity.badRequest().build()
         }
+    }
 
+    @GetMapping("/user")
+    fun getUserAndCommittees(): ResponseEntity<UserCommitteeResponseBody> {
+        return try {
+            val userandcommittees = committeeService.getUserAndCommittees()
+            ResponseEntity.ok(userandcommittees)
+        } catch (e: Exception) {
+            ResponseEntity.badRequest().build()
+        }
     }
 }
