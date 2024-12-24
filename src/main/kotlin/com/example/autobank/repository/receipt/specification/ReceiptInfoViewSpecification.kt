@@ -19,12 +19,15 @@ class ReceiptInfoSpecification(
 
         if (status == "NONE") {
             predicates.add(criteriaBuilder.isNull(root.get<String>("latestReviewStatus")))
-        } else if (status != null) {
+        } else if (status == "DONE") {
+            predicates.add(criteriaBuilder.isNotNull(root.get<String>("latestReviewStatus")))
+        }else if (status != null) {
             predicates.add(criteriaBuilder.equal(root.get<String>("latestReviewStatus"), status))
         }
 
         if (committeeName != null) {
-            predicates.add(criteriaBuilder.equal(root.get<String>("committeeName"), committeeName))
+            val committeeNames = committeeName.split(",").map { it.trim() }
+            predicates.add(root.get<String>("committeeName").`in`(committeeNames))
         }
 
         if (search != null) {
