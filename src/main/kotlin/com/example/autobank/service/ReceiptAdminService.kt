@@ -29,7 +29,7 @@ class ReceiptAdminService {
         val sort = if (!sortField.isNullOrEmpty()) {
             Sort.by(Sort.Direction.fromString(sortOrder ?: "ASC"), sortField)
         } else {
-            Sort.unsorted()
+            Sort.by(Sort.Direction.DESC, "receiptCreatedAt")
         }
 
         val pageable = PageRequest.of(from, count, sort)
