@@ -6,7 +6,8 @@ import jakarta.persistence.criteria.Predicate
 
 class ReceiptInfoSpecification(
     private val status: String?,
-    private val committeeName: String?
+    private val committeeName: String?,
+    private val search: String?
 ) : Specification<ReceiptInfo> {
     override fun toPredicate(
         root: jakarta.persistence.criteria.Root<ReceiptInfo>,
@@ -21,9 +22,13 @@ class ReceiptInfoSpecification(
         } else if (status != null) {
             predicates.add(criteriaBuilder.equal(root.get<String>("latestReviewStatus"), status))
         }
-        println(committeeName)
+
         if (committeeName != null) {
             predicates.add(criteriaBuilder.equal(root.get<String>("committeeName"), committeeName))
+        }
+
+        if (search != null) {
+            predicates.add(criteriaBuilder.like(root.get<String>("receiptName"), "%$search%"))
         }
 
 

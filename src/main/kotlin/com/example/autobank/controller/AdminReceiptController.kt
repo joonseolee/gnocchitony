@@ -33,12 +33,12 @@ class AdminReceiptController {
 
 
     @GetMapping("/all")
-    fun getAllReceipts(@Param("page") from: Int, @Param("count") count: Int, @Param("status") status: String?, @Param("committee") committee: String?, @Param("sortOrder") sortOrder: String?, @Param("sortField") sortField: String?): ResponseEntity<List<ReceiptInfo>> {
+    fun getAllReceipts(@Param("page") from: Int, @Param("count") count: Int, @Param("status") status: String?, @Param("committee") committee: String?, @Param("search") search: String?, @Param("sortOrder") sortOrder: String?, @Param("sortField") sortField: String?): ResponseEntity<List<ReceiptInfo>> {
         if (!authenticationService.checkBankomMembership()) {
             return ResponseEntity.status(403).build()
         }
 
-        return ResponseEntity.ok(receiptAdminService.getAll(from, count, status, committee, sortField, sortOrder))
+        return ResponseEntity.ok(receiptAdminService.getAll(from, count, status, committee, search, sortField, sortOrder))
     }
 
     @GetMapping("/get/{id}")

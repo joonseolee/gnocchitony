@@ -32,7 +32,7 @@ class ReceiptAdminService {
     @Autowired
     lateinit var attachmentService: AttachmentService
 
-    fun getAll(from: Int, count: Int, status: String?, committeeName: String?, sortField: String?, sortOrder: String?): List<ReceiptInfo>? {
+    fun getAll(from: Int, count: Int, status: String?, committeeName: String?, search: String?, sortField: String?, sortOrder: String?): List<ReceiptInfo>? {
 
 
         val sort = if (!sortField.isNullOrEmpty()) {
@@ -43,9 +43,9 @@ class ReceiptAdminService {
 
         val pageable = PageRequest.of(from, count, sort)
 
-        return if (status != null || committeeName != null) {
+        return if (status != null || committeeName != null || search != null) {
             receiptInfoViewRepository.findAll(
-                ReceiptInfoSpecification(status, committeeName), pageable
+                ReceiptInfoSpecification(status, committeeName, search), pageable
             ).toList()
         } else {
             receiptInfoViewRepository.findAll(pageable).toList()
