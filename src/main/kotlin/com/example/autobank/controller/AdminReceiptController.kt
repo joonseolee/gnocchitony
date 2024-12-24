@@ -13,6 +13,7 @@ import com.example.autobank.service.AuthenticationService
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import com.example.autobank.data.ReceiptReviewRequestBody
+import com.example.autobank.data.receipt.ReceiptListResponseBody
 import com.example.autobank.data.receipt.ReceiptReview
 import com.example.autobank.service.ReceiptReviewService
 import org.springframework.data.repository.query.Param
@@ -33,7 +34,7 @@ class AdminReceiptController {
 
 
     @GetMapping("/all")
-    fun getAllReceipts(@Param("page") from: Int, @Param("count") count: Int, @Param("status") status: String?, @Param("committee") committee: String?, @Param("search") search: String?, @Param("sortOrder") sortOrder: String?, @Param("sortField") sortField: String?): ResponseEntity<List<ReceiptInfo>> {
+    fun getAllReceipts(@Param("page") from: Int, @Param("count") count: Int, @Param("status") status: String?, @Param("committee") committee: String?, @Param("search") search: String?, @Param("sortOrder") sortOrder: String?, @Param("sortField") sortField: String?): ResponseEntity<ReceiptListResponseBody> {
         if (!authenticationService.checkBankomMembership()) {
             return ResponseEntity.status(403).build()
         }

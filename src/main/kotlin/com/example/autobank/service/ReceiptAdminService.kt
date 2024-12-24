@@ -23,16 +23,7 @@ class ReceiptAdminService {
     @Autowired
     lateinit var receiptService: ReceiptService
 
-    @Autowired
-    lateinit var paymentCardService: PaymentCardService
-
-    @Autowired
-    lateinit var imageService: ImageService
-
-    @Autowired
-    lateinit var attachmentService: AttachmentService
-
-    fun getAll(from: Int, count: Int, status: String?, committeeName: String?, search: String?, sortField: String?, sortOrder: String?): List<ReceiptInfo>? {
+    fun getAll(from: Int, count: Int, status: String?, committeeName: String?, search: String?, sortField: String?, sortOrder: String?): ReceiptListResponseBody? {
 
 
         val sort = if (!sortField.isNullOrEmpty()) {
@@ -43,21 +34,19 @@ class ReceiptAdminService {
 
         val pageable = PageRequest.of(from, count, sort)
 
-        return if (status != null || committeeName != null || search != null) {
-            receiptInfoViewRepository.findAll(
-                ReceiptInfoSpecification(status, committeeName, search), pageable
-            ).toList()
-        } else {
-            receiptInfoViewRepository.findAll(pageable).toList()
-        }
+        val specification = ReceiptInfoSpecification(status, committeeName, search)
+
+        val receipts: List<ReceiptInfo> = receiptInfoViewRepository.findAll(specification, pageable).toList()
+
+        val total: Long = receiptInfoViewRepository.count(specification)
+
+        return ReceiptListResponseBody(receipts.toTypedArray(), total)
+
 
     }
 
     fun getReceipt(id: Int): CompleteReceipt? {
         val receipt = receiptInfoViewRepository.findByReceiptId(id)
-        if (receipt == null) {
-            return null
-        }
 
         return receiptService.getCompleteReceipt(receipt)
 
