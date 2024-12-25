@@ -8,13 +8,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.autobank.service.ReceiptAdminService;
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.PathVariable
-import com.example.autobank.data.receipt.ReceiptInfo
 import com.example.autobank.service.AuthenticationService
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import com.example.autobank.data.ReceiptReviewRequestBody
 import com.example.autobank.data.receipt.ReceiptListResponseBody
-import com.example.autobank.data.receipt.ReceiptReview
+import com.example.autobank.data.models.ReceiptReview
 import com.example.autobank.service.ReceiptReviewService
 import org.springframework.data.repository.query.Param
 

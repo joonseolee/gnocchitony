@@ -1,6 +1,6 @@
 package com.example.autobank.repository.receipt.specification
 
-import com.example.autobank.data.receipt.ReceiptInfo
+import com.example.autobank.data.models.ReceiptInfo
 import org.springframework.data.jpa.domain.Specification
 import jakarta.persistence.criteria.Predicate
 

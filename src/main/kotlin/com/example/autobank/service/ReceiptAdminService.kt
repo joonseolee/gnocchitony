@@ -5,7 +5,7 @@ import com.example.autobank.repository.receipt.ReceiptRepository
 import org.springframework.beans.factory.annotation.Autowired
 import com.example.autobank.repository.receipt.ReceiptInfoViewRepository
 import com.example.autobank.data.receipt.*
-import com.example.autobank.data.ReceiptReviewRequestBody
+import com.example.autobank.data.models.ReceiptInfo
 import com.example.autobank.repository.receipt.specification.ReceiptInfoSpecification
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
@@ -13,9 +13,6 @@ import org.springframework.data.domain.Sort
 
 @Service
 class ReceiptAdminService {
-
-    @Autowired
-    lateinit var receiptRepository: ReceiptRepository
 
     @Autowired
     lateinit var receiptInfoViewRepository: ReceiptInfoViewRepository
@@ -47,7 +44,6 @@ class ReceiptAdminService {
 
     fun getReceipt(id: Int): CompleteReceipt? {
         val receipt = receiptInfoViewRepository.findByReceiptId(id)
-
         return receiptService.getCompleteReceipt(receipt)
 
     }

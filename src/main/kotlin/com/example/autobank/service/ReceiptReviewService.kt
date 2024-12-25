@@ -1,8 +1,7 @@
 package com.example.autobank.service
 
 import com.example.autobank.data.ReceiptReviewRequestBody
-import com.example.autobank.data.receipt.ReceiptRequestBody
-import com.example.autobank.data.receipt.ReceiptReview
+import com.example.autobank.data.models.ReceiptReview
 import com.example.autobank.repository.receipt.ReceiptReviewRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service

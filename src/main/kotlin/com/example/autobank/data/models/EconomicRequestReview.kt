@@ -1,4 +1,4 @@
-package com.example.autobank.data
+package com.example.autobank.data.models
 
 import jakarta.persistence.*
 import java.time.LocalDateTime

@@ -1,6 +1,6 @@
 package com.example.autobank.controller
 
-import com.example.autobank.data.Economicrequest
+import com.example.autobank.data.models.Economicrequest
 import com.example.autobank.data.user.OnlineUser
 import com.example.autobank.service.AdminService
 import com.example.autobank.service.EconomicRequestReviewService

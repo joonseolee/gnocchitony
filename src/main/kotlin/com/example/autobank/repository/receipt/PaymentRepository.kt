@@ -1,7 +1,6 @@
 package com.example.autobank.repository.receipt
 
-import com.example.autobank.data.receipt.Card
-import com.example.autobank.data.receipt.Payment
+import com.example.autobank.data.models.Payment
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 

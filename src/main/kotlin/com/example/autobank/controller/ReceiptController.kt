@@ -1,5 +1,6 @@
 package com.example.autobank.controller
 
+import com.example.autobank.data.models.ReceiptInfo
 import com.example.autobank.data.receipt.*
 import com.example.autobank.service.ImageService
 import com.example.autobank.service.ReceiptService

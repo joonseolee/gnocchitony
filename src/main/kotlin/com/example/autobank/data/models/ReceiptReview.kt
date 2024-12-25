@@ -1,5 +1,4 @@
-package com.example.autobank.data.receipt
-
+package com.example.autobank.data.models
 
 import jakarta.persistence.*
 import org.hibernate.annotations.CreationTimestamp
@@ -7,31 +6,27 @@ import org.jetbrains.annotations.NotNull
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "receipt")
-class Receipt(
+@Table(name = "receiptreview")
+class ReceiptReview (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     @NotNull
     val id: Int,
 
-    @Column(name = "amount")
-    val amount: Double,
+    @Column(name = "receipt_id")
+    val receiptId: Int,
 
-    @Column(name = "committee_id")
-    val committee_id: Int,
+    @Column(name = "status")
+    val status: String,
 
-    @Column(name = "name")
-    val name: String,
-
-    @Column(name = "description")
-    val description: String,
+    @Column(name = "comment")
+    val comment: String,
 
     @Column(name = "onlineuser_id")
-    var onlineUserId: Int?,
+    var onlineUserId: Int,
 
     @CreationTimestamp
     @Column(name = "createdat")
     val createdat: LocalDateTime?,
-
     )
