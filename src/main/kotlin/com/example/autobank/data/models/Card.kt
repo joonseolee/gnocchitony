@@ -1,11 +1,11 @@
-package com.example.autobank.data.receipt
+package com.example.autobank.data.models
 
 import jakarta.persistence.*
 import org.jetbrains.annotations.NotNull
 
 @Entity
-@Table(name = "attachment")
-class Attachment(
+@Table(name = "card")
+class Card (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -15,7 +15,7 @@ class Attachment(
     @Column(name = "receipt_id")
     val receiptId: Int,
 
-    @Column(name = "name")
-    val name: String,
+    @Column(name = "card_number")
+    val card_number: String,
 
     )

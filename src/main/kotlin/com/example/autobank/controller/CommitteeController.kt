@@ -1,14 +1,8 @@
 package com.example.autobank.controller
 
-import com.example.autobank.data.Committee
-import com.example.autobank.data.Economicrequest
-import com.example.autobank.data.user.OnlineUser
+import com.example.autobank.data.models.Committee
 import com.example.autobank.data.user.UserCommitteeResponseBody
-import com.example.autobank.repository.CommitteeRepository
-import com.example.autobank.service.AdminService
 import com.example.autobank.service.CommitteeService
-import com.example.autobank.service.EconomicRequestReviewService
-import com.example.autobank.service.EconomicrequestService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*

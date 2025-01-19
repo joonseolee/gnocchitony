@@ -1,6 +1,6 @@
 package com.example.autobank.controller
 
-import com.example.autobank.data.Economicrequest
+import com.example.autobank.data.models.Economicrequest
 import com.example.autobank.service.AuthenticationService
 import com.example.autobank.service.EconomicrequestService
 import org.springframework.beans.factory.annotation.Autowired

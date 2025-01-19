@@ -1,4 +1,4 @@
-package com.example.autobank.data.receipt
+package com.example.autobank.data.models
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity

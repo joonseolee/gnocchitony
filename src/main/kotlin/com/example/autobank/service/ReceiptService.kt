@@ -1,5 +1,9 @@
 package com.example.autobank.service
 
+import com.example.autobank.data.models.Attachment
+import com.example.autobank.data.models.Card
+import com.example.autobank.data.models.Payment
+import com.example.autobank.data.models.ReceiptInfo
 import com.example.autobank.data.receipt.*
 import com.example.autobank.repository.receipt.CardRepository
 import com.example.autobank.repository.receipt.PaymentRepository
@@ -9,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 
 @Service
 

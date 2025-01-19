@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import com.example.autobank.repository.receipt.CardRepository
 import com.example.autobank.repository.receipt.PaymentRepository
-import com.example.autobank.data.receipt.Card
-import com.example.autobank.data.receipt.Payment
+import com.example.autobank.data.models.Card
+import com.example.autobank.data.models.Payment
 
 @Service
 class PaymentCardService {

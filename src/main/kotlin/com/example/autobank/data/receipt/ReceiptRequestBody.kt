@@ -1,7 +1,6 @@
 package com.example.autobank.data.receipt
 
-import com.example.autobank.data.receipt.Receipt
-import jakarta.persistence.Entity
+import com.example.autobank.data.models.Receipt
 
 
 class ReceiptRequestBody {

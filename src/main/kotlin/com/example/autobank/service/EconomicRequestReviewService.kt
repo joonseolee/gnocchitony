@@ -1,7 +1,7 @@
 package com.example.autobank.service
 
-import com.example.autobank.data.EconomicRequestReview
-import com.example.autobank.data.Economicrequest
+import com.example.autobank.data.models.EconomicRequestReview
+import com.example.autobank.data.models.Economicrequest
 import com.example.autobank.data.user.OnlineUser
 import com.example.autobank.repository.EconomicRequestReviewRepository
 import org.springframework.beans.factory.annotation.Autowired

@@ -1,4 +1,4 @@
-package com.example.autobank.data.receipt
+package com.example.autobank.data.models
 
 import jakarta.persistence.*
 import org.jetbrains.annotations.NotNull

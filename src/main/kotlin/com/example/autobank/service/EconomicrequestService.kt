@@ -1,6 +1,6 @@
 package com.example.autobank.service
 
-import com.example.autobank.data.Economicrequest
+import com.example.autobank.data.models.Economicrequest
 import com.example.autobank.repository.EconomicrequestRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service

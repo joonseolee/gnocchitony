@@ -1,6 +1,6 @@
 package com.example.autobank.service;
 
-import com.example.autobank.data.Committee
+import com.example.autobank.data.models.Committee
 import com.example.autobank.data.user.UserCommitteeResponseBody
 import com.example.autobank.repository.CommitteeRepository
 import org.springframework.beans.factory.annotation.Autowired
