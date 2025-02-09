@@ -32,7 +32,6 @@ ext {
 
 dependencies {
     implementation 'com.microsoft.sqlserver:mssql-jdbc:12.8.1.jre11'
-    implementation 'org.springframework.boot:spring-boot-starter-data-rest'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
     implementation 'org.springframework.data:spring-data-jdbc:3.2.2'
