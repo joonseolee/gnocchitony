@@ -1,11 +1,13 @@
-FROM gradle:7.4.1 AS build
-COPY --chown=gradle:gradle . /home/gradle/src
-WORKDIR /home/gradle/src
-RUN gradle build
+FROM gradle:8-jdk-alpine AS build
+WORKDIR /app
+COPY . .
+RUN ./gradlew clean bootJar
+
 
 FROM openjdk:17
-EXPOSE 8080
-COPY --from=build /home/gradle/src/build/libs/autobank-image.jar /app/
-RUN bash -c 'touch /app/autobank-image.jar'
-ENTRYPOINT ["java", "-XX:+UnlockExperimentalVMOptions", "-Djava.security.egd=file:/dev/./urandom","-jar","/app/autobank-image.jar"]
+USER nobody
+WORKDIR /app
+COPY --from=build /app/build/libs/*.jar app.jar
 
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]
