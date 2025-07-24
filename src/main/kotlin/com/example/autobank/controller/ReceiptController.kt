@@ -33,12 +33,13 @@ class ReceiptController {
             val res = receiptService.getAllReceiptsFromUser(from, count, status, committee, search, sortField, sortOrder)
             ResponseEntity.ok(res)
         } catch (e: Exception) {
+            e.printStackTrace()
             ResponseEntity.badRequest().build()
         }
     }
 
     @GetMapping("/get/{id}")
-    fun getReceipt(@PathVariable id: Int): ResponseEntity<CompleteReceipt> {
+    fun getReceipt(@PathVariable id: String): ResponseEntity<CompleteReceipt> {
         return try {
             val res = receiptService.getReceipt(id)
             ResponseEntity.ok(res)
