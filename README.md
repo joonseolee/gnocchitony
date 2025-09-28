@@ -13,14 +13,6 @@ Autobank is a Kotlin Spring Boot application designed for managing financial rec
    ```
 
 2. **Configure environment variables**
-   Copy the required values to your environment or update `application.properties`:
-   ```properties
-   spring.datasource.url=your_database_url
-   auth0.audience=your_auth0_audience
-   spring.security.oauth2.resourceserver.jwt.issuer-uri=your_issuer_uri
-   azure.storage.connection-string=your_azure_storage_connection
-   environment=dev
-   ```
 
 3. **Run the application**
    ```bash
@@ -57,24 +49,6 @@ Detailed documentation is available in the `/docs` folder:
 - [Setup & Deployment](docs/setup-deployment.md) - Detailed setup and deployment guide
 
 ## 🔧 Configuration
-
-### Required Environment Variables
-
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `spring.datasource.url` | Database connection URL | `jdbc:sqlserver://...` |
-| `auth0.audience` | Auth0 API audience | `https://online.ntnu.no` |
-| `spring.security.oauth2.resourceserver.jwt.issuer-uri` | JWT issuer URI | `https://auth.online.ntnu.no/` |
-| `azure.storage.connection-string` | Azure Storage connection | `DefaultEndpointsProtocol=https;...` |
-| `environment` | Environment mode | `dev` or `prod` |
-| `admincommittee` | Admin committee name | `Applikasjonskomitee` |
-
-### Database Configuration
-```properties
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.SQLServerDialect
-spring.jpa.hibernate.naming.implicit-strategy=org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
-spring.jpa.hibernate.naming.physical-strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-```
 
 ## 🔐 Authentication
 
